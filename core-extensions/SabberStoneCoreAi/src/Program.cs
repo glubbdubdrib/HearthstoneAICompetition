@@ -43,8 +43,10 @@ namespace SabberStoneCoreAi
 			};
 
 			Console.WriteLine("Setup POGameHandler");
-			AbstractAgent player1 = new GreedyAgent();
-			AbstractAgent player2 = new MyAgent();
+			AbstractAgent player1 = new EVA();
+			AbstractAgent player2 = new AlvaroAgent();
+			//AbstractAgent player1 = new ParametricGreedyAgent();
+			//AbstractAgent player2 = new MyAgent();
 			var gameHandler = new POGameHandler(gameConfig, player1, player2, repeatDraws:false);
 
 			Console.WriteLine("Simulate Games");

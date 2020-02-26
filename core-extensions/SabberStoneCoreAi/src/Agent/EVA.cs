@@ -24,6 +24,7 @@
 
 using SabberStoneCore.Model.Entities;
 using SabberStoneCore.Tasks;
+using SabberStoneCore.Tasks.PlayerTasks;
 using SabberStoneCoreAi.Agent;
 using SabberStoneCoreAi.POGame;
 using System;
@@ -32,7 +33,7 @@ using System.Text;
 using System.Linq;
 using System.Globalization;
 
-namespace SabberStoneCoreAi.src.Agent
+namespace SabberStoneCoreAi.Agent
 {
 	class EVA : AbstractAgent
 	{

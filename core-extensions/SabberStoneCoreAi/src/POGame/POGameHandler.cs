@@ -62,7 +62,8 @@ namespace SabberStoneCoreAi.POGame
 						Console.WriteLine("Turn " + game.Turn);
 					if (printGame)
 					{
-						Console.WriteLine(MCGS.SabberHelper.SabberUtils.PrintGame(game));
+						//commented by Alberto Tonda on 2020-02-26
+						//Console.WriteLine(MCGS.SabberHelper.SabberUtils.PrintGame(game));
 						printGame = false;
 					}
 

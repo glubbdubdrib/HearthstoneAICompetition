@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2019, Alvaro Florencio de Marcos Ales. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
@@ -239,7 +239,7 @@ namespace SabberStoneCoreAi.Agent
 			if(nodeToSimulate.task.PlayerTaskType == PlayerTaskType.END_TURN)
 				return Estimator.estimateFromState(ESTIMATION_MODE, poGame);
 				
-			while (poGame.getGame().State != SabberStoneCore.Enums.State.COMPLETE)
+			while (poGame.getCopy().State != SabberStoneCore.Enums.State.COMPLETE)
 			{
 				task = SimulationPolicies.selectSimulationPolicy(SIMULATION_POLICY, poGame, Rnd, greedyAgent, CHILDREN_CONSIDERED_SIMULATING);
 				taskToSimulate.Add(task);

@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2019, Alvaro Florencio de Marcos Ales. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or

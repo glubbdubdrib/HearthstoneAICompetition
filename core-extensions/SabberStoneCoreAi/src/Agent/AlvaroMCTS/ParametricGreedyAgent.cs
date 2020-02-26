@@ -1,4 +1,4 @@
-﻿/*
+/*
  * ParametricGreedyAgent.cs
  * 
  * Copyright (c) 2018, Pablo Garcia-Sanchez. All rights reserved.
