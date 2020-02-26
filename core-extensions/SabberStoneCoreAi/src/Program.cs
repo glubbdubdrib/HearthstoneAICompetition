@@ -22,6 +22,8 @@ using SabberStoneCore.Enums;
 using SabberStoneCoreAi.POGame;
 using SabberStoneCoreAi.Agent.ExampleAgents;
 using SabberStoneCoreAi.Agent;
+using SabberStoneCoreAi.Meta;
+using SabberStoneCore.Model;
 
 namespace SabberStoneCoreAi
 {
@@ -60,53 +62,27 @@ namespace SabberStoneCoreAi
 				return Decks.RenoKazakusMage;
 			if (c.Equals("MidrangeJadeShaman"))
 				return Decks.MidrangeJadeShaman;
-			if		private static CardClass stringToCardClass(string c ) {
-			if (c.Equals("MAGE"))
-				return CardClass.MAGE;
-			if (c.Equals("PALADIN"))
-				return CardClass.PALADIN;
-			if (c.Equals("PRIEST"))
-				return CardClass.PRIEST;
-
-			if (c.Equals("DRUID"))
-				return CardClass.DRUID;
-			if (c.Equals("HUNTER"))
-				return CardClass.HUNTER;
-			if (c.Equals("ROGUE"))
-				return CardClass.ROGUE;
-
-			if (c.Equals("SHAMAN"))
-				return CardClass.SHAMAN;
-			if (c.Equals("WARLOCK"))
-				return CardClass.WARLOCK;
-			if (c.Equals("WARRIOR"))
-				return CardClass.WARRIOR;
-
-
-			throw new Exception("CARD CLASS NOT VALID");
-
-		}
-
-		private static List<Card> stringToDeck(string c)
-		{
-			if (c.Equals("RenoKazakusMage"))
-				return Decks.RenoKazakusMage;
-			if (c.Equals("MidrangeJadeShaman"))
-				return Decks.MidrangeJadeShaman;
 			if (c.Equals("AggroPirateWarrior"))
 				return Decks.AggroPirateWarrior;
 			throw new Exception("DECK DOES NOT EXIST");
-
-		} (c.Equals("AggroPirateWarrior"))
-				return Decks.AggroPirateWarrior;
-			throw new Exception("DECK DOES NOT EXIST");
-
 		}
+
 		private static void Main(string[] args)
 		{
 			Console.WriteLine("Setup gameConfig");
 
-			var gameConfig = new GameConfig(string[] args)
+			AbstractAgent agent1 = new EVA();
+			AbstractAgent agent2 = new AlvaroAgent();
+			if (args[0].Equals("EVA"))
+				((EVA)agent1).InitializeAgent();
+			else if (args[0].Equals("AlvaroAgent"))
+				((AlvaroAgent)agent1).InitializeAgent();
+			if (args[3].Equals("EVA"))
+				((EVA)agent2).InitializeAgent();
+			else if (args[3].Equals("AlvaroAgent"))
+				((AlvaroAgent)agent2).InitializeAgent();
+
+			var gameConfig = new GameConfig()
 			{
 				StartPlayer = 1,
 //				Player1HeroClass = CardClass.MAGE,
@@ -114,33 +90,22 @@ namespace SabberStoneCoreAi
 				FillDecks = true,
 				Shuffle = true,
 				Logging = false,
-				if args[0].equals("EVA")
-				{
-					AbstractAgent player1 = new EVA();
-					((EVA)player1).InitializeAgent();
-				}
-				if args[3].equals("AlvaroAgent")
-				{
-					AbstractAgent player2 = new AlvaroAgent();
-					((AlvaroAgent)player2).InitializeAgent();
-				}
 				Player1HeroClass = stringToCardClass(args[2]),
 				Player2HeroClass = stringToCardClass(args[5]),
 //				FillDecks = false,
 //				Logging = false,
 				Player1Deck = stringToDeck(args[1]),
 				Player2Deck = stringToDeck(args[4]) //RenoKazakusMage
-				int numGames = Int32.Parse(args[6]);
 			};
 
+			int numGames = Int32.Parse(args[6]);
+
 			Console.WriteLine("Setup POGameHandler");
-			AbstractAgent player1 = gameConfig.player1;
-			AbstractAgent player2 = gameConfig.player2
-			var gameHandler = new POGameHandler(gameConfig, player1, player2, repeatDraws:false);
+			var gameHandler = new POGameHandler(gameConfig, agent1, agent2, repeatDraws:false);
 
 			Console.WriteLine("Simulate Games");
 			//gameHandler.PlayGame();
-			gameHandler.PlayGames(nr_of_games:gameConfig.numGames, addResultToGameStats:true, debug:false);
+			gameHandler.PlayGames(nr_of_games:numGames, addResultToGameStats:true, debug:false);
 			GameStats gameStats = gameHandler.getGameStats();
 
 			gameStats.printResults();
