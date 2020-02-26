@@ -31,31 +31,63 @@ namespace SabberStoneCoreAi
 		private static void Main()
 		{
 			Console.WriteLine("Setup gameConfig");
-
-			var gameConfig = new GameConfig()
-			{
-				StartPlayer = 1,
-				Player1HeroClass = CardClass.MAGE,
-				Player2HeroClass = CardClass.MAGE,
-				FillDecks = true,
-				Shuffle = true,
-				Logging = false
-			};
+			GameConfig gameConfig = gameConfigCoevoluationary(args);
 
 			Console.WriteLine("Setup POGameHandler");
-			AbstractAgent player1 = new GreedyAgent();
-			AbstractAgent player2 = new MyAgent();
-			var gameHandler = new POGameHandler(gameConfig, player1, player2, repeatDraws:false);
+			//AbstractAgent player1agent = new ParametricGreedyAgent();
+			//((ParametricGreedyAgent)player1agent).setAgeintWeightsFromString(args[2]);
+			Console.WriteLine("Attempting to istantiate AlvaroMCTS agent...");
+			//AbstractAgent player1agent = new EVA();
+			//((EVA)player1agent).InitializeAgent();
+			AbstractAgent player1agent = new AlvaroAgent();
+			//AbstractAgent player2agent = new ParametricGreedyAgent();
+			//((ParametricGreedyAgent)player2agent).setAgeintWeightsFromString(args[5]);
+			AbstractAgent player2agent = new EVA();
+			((EVA)player2agent).InitializeAgent();
+			POGameHandler gameHandler = new POGameHandler(gameConfig, player1agent, player2agent, debug:false);
+			gameConfig.StartPlayer = -1; //Pick random start player
 
-			Console.WriteLine("Simulate Games");
-			//gameHandler.PlayGame();
-			gameHandler.PlayGames(nr_of_games:1, addResultToGameStats:true, debug:false);
+			Console.WriteLine("STARTING GAMES");
+			int numGames = Int32.Parse(args[6]);
+
+			gameHandler.PlayGames(numGames);
 			GameStats gameStats = gameHandler.getGameStats();
+			//gameStats.printResults();
+			int p1wins = gameStats.PlayerA_Wins;
+			int p2wins = gameStats.PlayerB_Wins;
+			Console.WriteLine(p1wins+" "+p2wins+" "+ numGames+ " " +
+				gameStats.PlayerA_TurnsToWin+" "+
+				gameStats.PlayerA_TurnsToLose+" "+
+				gameStats.PlayerA_HealthDifferenceWinning + " " +
+				gameStats.PlayerA_HealthDifferenceLosing
+				);
 
-			gameStats.printResults();
-
-			Console.WriteLine("Test successful");
-			Console.ReadLine();
+//			Console.WriteLine("Setup gameConfig");
+//
+//			var gameConfig = new GameConfig()
+//			{
+//				StartPlayer = 1,
+//				Player1HeroClass = CardClass.MAGE,
+//				Player2HeroClass = CardClass.MAGE,
+//				FillDecks = true,
+//				Shuffle = true,
+//				Logging = false
+//			};
+//
+//			Console.WriteLine("Setup POGameHandler");
+//			AbstractAgent player1 = new GreedyAgent();
+//			AbstractAgent player2 = new MyAgent();
+//			var gameHandler = new POGameHandler(gameConfig, player1, player2, repeatDraws:false);
+//
+//			Console.WriteLine("Simulate Games");
+//			//gameHandler.PlayGame();
+//			gameHandler.PlayGames(nr_of_games:1, addResultToGameStats:true, debug:false);
+//			GameStats gameStats = gameHandler.getGameStats();
+//
+//			gameStats.printResults();
+//
+//			Console.WriteLine("Test successful");
+//			Console.ReadLine();
 		}
 	}
 }
