@@ -71,16 +71,32 @@ namespace SabberStoneCoreAi
 		{
 			Console.WriteLine("Setup gameConfig");
 
-			AbstractAgent agent1 = new EVA();
-			AbstractAgent agent2 = new AlvaroAgent();
+			AbstractAgent agent1;
+			AbstractAgent agent2;
 			if (args[0].Equals("EVA"))
+			{
+				Console.WriteLine("EVA loaded for agent 1");
+				agent1 = new EVA();
 				((EVA)agent1).InitializeAgent();
+			}
 			else if (args[0].Equals("AlvaroAgent"))
+			{
+				agent1 = new AlvaroAgent();
 				((AlvaroAgent)agent1).InitializeAgent();
+			}
 			if (args[3].Equals("EVA"))
+			{
+				Console.WriteLine("EVA loaded for agent 2");
+				agent2 = new EVA();
 				((EVA)agent2).InitializeAgent();
+			}
 			else if (args[3].Equals("AlvaroAgent"))
+			{
+				agent2 = new AlvaroAgent();
 				((AlvaroAgent)agent2).InitializeAgent();
+			}
+
+			Console.WriteLine("Agents loaded!");
 
 			var gameConfig = new GameConfig()
 			{
@@ -111,7 +127,7 @@ namespace SabberStoneCoreAi
 			gameStats.printResults();
 
 			Console.WriteLine("Test successful");
-			Console.ReadLine();
+//			Console.ReadLine();
 		}
 	}
 }
