@@ -27,33 +27,120 @@ namespace SabberStoneCoreAi
 {
 	internal class Program
 	{
+		private static CardClass stringToCardClass(string c ) {
+			if (c.Equals("MAGE"))
+				return CardClass.MAGE;
+			if (c.Equals("PALADIN"))
+				return CardClass.PALADIN;
+			if (c.Equals("PRIEST"))
+				return CardClass.PRIEST;
 
+			if (c.Equals("DRUID"))
+				return CardClass.DRUID;
+			if (c.Equals("HUNTER"))
+				return CardClass.HUNTER;
+			if (c.Equals("ROGUE"))
+				return CardClass.ROGUE;
+
+			if (c.Equals("SHAMAN"))
+				return CardClass.SHAMAN;
+			if (c.Equals("WARLOCK"))
+				return CardClass.WARLOCK;
+			if (c.Equals("WARRIOR"))
+				return CardClass.WARRIOR;
+
+
+			throw new Exception("CARD CLASS NOT VALID");
+
+		}
+
+		private static List<Card> stringToDeck(string c)
+		{
+			if (c.Equals("RenoKazakusMage"))
+				return Decks.RenoKazakusMage;
+			if (c.Equals("MidrangeJadeShaman"))
+				return Decks.MidrangeJadeShaman;
+			if		private static CardClass stringToCardClass(string c ) {
+			if (c.Equals("MAGE"))
+				return CardClass.MAGE;
+			if (c.Equals("PALADIN"))
+				return CardClass.PALADIN;
+			if (c.Equals("PRIEST"))
+				return CardClass.PRIEST;
+
+			if (c.Equals("DRUID"))
+				return CardClass.DRUID;
+			if (c.Equals("HUNTER"))
+				return CardClass.HUNTER;
+			if (c.Equals("ROGUE"))
+				return CardClass.ROGUE;
+
+			if (c.Equals("SHAMAN"))
+				return CardClass.SHAMAN;
+			if (c.Equals("WARLOCK"))
+				return CardClass.WARLOCK;
+			if (c.Equals("WARRIOR"))
+				return CardClass.WARRIOR;
+
+
+			throw new Exception("CARD CLASS NOT VALID");
+
+		}
+
+		private static List<Card> stringToDeck(string c)
+		{
+			if (c.Equals("RenoKazakusMage"))
+				return Decks.RenoKazakusMage;
+			if (c.Equals("MidrangeJadeShaman"))
+				return Decks.MidrangeJadeShaman;
+			if (c.Equals("AggroPirateWarrior"))
+				return Decks.AggroPirateWarrior;
+			throw new Exception("DECK DOES NOT EXIST");
+
+		} (c.Equals("AggroPirateWarrior"))
+				return Decks.AggroPirateWarrior;
+			throw new Exception("DECK DOES NOT EXIST");
+
+		}
 		private static void Main(string[] args)
 		{
 			Console.WriteLine("Setup gameConfig");
 
-			var gameConfig = new GameConfig()
+			var gameConfig = new GameConfig(string[] args)
 			{
 				StartPlayer = 1,
-				Player1HeroClass = CardClass.MAGE,
-				Player2HeroClass = CardClass.MAGE,
+//				Player1HeroClass = CardClass.MAGE,
+//				Player2HeroClass = CardClass.MAGE,
 				FillDecks = true,
 				Shuffle = true,
-				Logging = false
+				Logging = false,
+				if args[0].equals("EVA")
+				{
+					AbstractAgent player1 = new EVA();
+					((EVA)player1).InitializeAgent();
+				}
+				if args[3].equals("AlvaroAgent")
+				{
+					AbstractAgent player2 = new AlvaroAgent();
+					((AlvaroAgent)player2).InitializeAgent();
+				}
+				Player1HeroClass = stringToCardClass(args[2]),
+				Player2HeroClass = stringToCardClass(args[5]),
+//				FillDecks = false,
+//				Logging = false,
+				Player1Deck = stringToDeck(args[1]),
+				Player2Deck = stringToDeck(args[4]) //RenoKazakusMage
+				int numGames = Int32.Parse(args[6]);
 			};
 
 			Console.WriteLine("Setup POGameHandler");
-			AbstractAgent player1 = new EVA();
-			((EVA)player1).InitializeAgent();
-			AbstractAgent player2 = new AlvaroAgent();
-			((AlvaroAgent)player2).InitializeAgent();
-			//AbstractAgent player1 = new ParametricGreedyAgent();
-			//AbstractAgent player2 = new MyAgent();
+			AbstractAgent player1 = gameConfig.player1;
+			AbstractAgent player2 = gameConfig.player2
 			var gameHandler = new POGameHandler(gameConfig, player1, player2, repeatDraws:false);
 
 			Console.WriteLine("Simulate Games");
 			//gameHandler.PlayGame();
-			gameHandler.PlayGames(nr_of_games:1, addResultToGameStats:true, debug:false);
+			gameHandler.PlayGames(nr_of_games:gameConfig.numGames, addResultToGameStats:true, debug:false);
 			GameStats gameStats = gameHandler.getGameStats();
 
 			gameStats.printResults();
