@@ -71,8 +71,8 @@ namespace SabberStoneCoreAi
 		{
 			Console.WriteLine("Setup gameConfig");
 
-			AbstractAgent agent1;
-			AbstractAgent agent2;
+			AbstractAgent agent1 = null;
+			AbstractAgent agent2 = null;
 			if (args[0].Equals("EVA"))
 			{
 				Console.WriteLine("EVA loaded for agent 1");
@@ -100,7 +100,7 @@ namespace SabberStoneCoreAi
 
 			var gameConfig = new GameConfig()
 			{
-				StartPlayer = 1,
+				StartPlayer = -1, // set to -1 should randomize starting player every game
 //				Player1HeroClass = CardClass.MAGE,
 //				Player2HeroClass = CardClass.MAGE,
 				FillDecks = true,
@@ -125,6 +125,8 @@ namespace SabberStoneCoreAi
 			GameStats gameStats = gameHandler.getGameStats();
 
 			gameStats.printResults();
+			Console.WriteLine("Player 1: " + args[0] + " with deck " + args[1]);
+			Console.WriteLine("Player 2: " + args[3] + " with deck " + args[4]);
 
 			Console.WriteLine("Test successful");
 //			Console.ReadLine();
