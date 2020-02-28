@@ -109,6 +109,8 @@ namespace SabberStoneCoreAi.Agent
 				return poGame.CurrentPlayer.Options()[0];
 			}
 			
+			Console.WriteLine("Turn #" + poGame.Turn + ": AlvaroAgent needs to take a decision...");
+			Console.WriteLine(poGame.FullPrint());
 			POGame.POGame initialState = poGame.getCopy();
 
 			Node root = new Node();
@@ -128,6 +130,8 @@ namespace SabberStoneCoreAi.Agent
 				selectedNode = Selection(root, iterations, ref poGame);
 				nodeToSimulate = Expansion(selectedNode, ref poGame);
 
+				//Console.WriteLine("Iteration #" + iterations + ": node to be simulated:" + selectedNode);
+
 				for(int i = 0; i < NUM_SIMULATIONS; i++)
 				{
 					scoreOfSimulation = Simulation(nodeToSimulate, poGame);
@@ -137,9 +141,12 @@ namespace SabberStoneCoreAi.Agent
 			}
 			stopwatch.Stop();
 		
-			return SelectAction.selectTask(SELECTION_ACTION_METHOD, root, iterations, EXPLORE_CONSTANT);
+			PlayerTask selectedTask = SelectAction.selectTask(SELECTION_ACTION_METHOD, root, iterations, EXPLORE_CONSTANT);
+			Console.WriteLine("Turn #" + poGame.Turn + ", selected task:" + selectedTask);
+			return selectedTask; 
 		}
 
+		// add a children node to the root, for each available task
 		private void InitializeRoot(Node root, POGame.POGame poGame)
 		{
 			foreach (PlayerTask task in poGame.CurrentPlayer.Options())
