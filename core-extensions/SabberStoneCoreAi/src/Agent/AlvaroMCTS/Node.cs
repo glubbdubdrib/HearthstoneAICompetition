@@ -44,6 +44,20 @@ namespace SabberStoneCoreAi.src.Agent.AlvaroMCTS
 			this.depth = depth;
 			children = new List<Node>();
 		}
+		
+		// added by Alberto Tonda, to print out the node's content
+		public override string ToString()
+		{
+			// TODO add all stuff related to node, like children and parent
+			StringBuilder sb = new StringBuilder();
+			sb.Append("[NODE depth=" + this.depth + ", children=" + this.children.Count + "] ");
+			sb.Append(this.task);
+
+			foreach(Node child in this.children)
+			       sb.Append(child.ToString());	
+
+			return sb.ToString(); 
+		}
 
 	}
 }

@@ -52,7 +52,7 @@ namespace SabberStoneCoreAi.Agent
 			SELECTION_ACTION_METHOD = "MaxVictoriesOverVisited";
 			SCORE_IMPORTANCE = 10;
 			TREE_POLICY = "UCB1";
-			TREE_MAXIMUM_DEPTH = 1;
+			TREE_MAXIMUM_DEPTH = 3;
 			SIMULATION_POLICY = "GreedyPolicy";
 			CHILDREN_CONSIDERED_SIMULATING = 1.0;
 			ESTIMATION_MODE = "LinearEstimation";
@@ -130,7 +130,7 @@ namespace SabberStoneCoreAi.Agent
 				selectedNode = Selection(root, iterations, ref poGame);
 				nodeToSimulate = Expansion(selectedNode, ref poGame);
 
-				//Console.WriteLine("Iteration #" + iterations + ": node to be simulated:" + selectedNode);
+				Console.WriteLine("Iteration #" + iterations + ": node to be simulated:" + selectedNode);
 
 				for(int i = 0; i < NUM_SIMULATIONS; i++)
 				{
